@@ -1,0 +1,430 @@
+:root {
+  --sage-green: #9caf88;
+  --beige: #f5f2e7;
+  --off-white: #faf9f6;
+  --text-color: #333;
+
+}/* NavBar.js */
+.navbar {
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content .nav-link {
+  display: block;
+  padding: 10px;
+}
+
+/* Home.js */
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--off-white);
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+}
+
+.home-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--off-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-header {
+  margin-bottom: 40px;
+  color: var(--sage-green);
+}
+
+.home-image {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.home-header p {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Register.js */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 400px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register-form label {
+  margin-bottom: 8px;
+  color: var(--sage-green);
+  font-weight: bold;
+}
+
+.register-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.register-form button {
+  background-color: var(--sage-green);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.register-form button:hover {
+  background-color: darken(var(--sage-green), 10%); /* Slightly darker sage green */
+}
+
+.error-message {
+  color: #c82333; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+
+/* Login.js */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 400px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login-form label {
+  margin-bottom: 8px;
+  color: var(--sage-green);
+  font-weight: bold;
+}
+
+.login-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.login-form button {
+  background-color: var(--sage-green); 
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-form button:hover {
+  background-color: darken(var(--sage-green), 10%); /* Slightly darker sage green */
+}
+
+.error-message {
+  color: #c82333; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+
+/* MyGarden.js */
+.mygarden-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 800px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.plants-list {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.plant-item {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  color: var(--sage-green); 
+}
+
+.plant-item:hover {
+  background-color: var(--beige); 
+}
+
+.error-message {
+  color: #c82333; /* Red for error messages */
+  margin-bottom: 15px;
+}
+
+/* Flower.js */
+.flower-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 800px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flower-details {
+  text-align: left;
+  margin-bottom: 20px;
+  color: var(--text-color); 
+}
+
+.flower-details p {
+  margin-bottom: 10px;
+}
+
+.flower-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button, .delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+}
+
+.edit-button {
+  background-color: var(--sage-green); 
+}
+
+.edit-button:hover {
+  background-color: darken(var(--sage-green), 10%); /* Slightly darker sage green */
+}
+
+.delete-button {
+  background-color: #c82333; /* Red for delete */
+}
+
+.delete-button:hover {
+  background-color: darken(#c82333, 10%); /* Slightly darker red */
+}
+
+/* Account.js */
+.account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white);
+  max-width: 800px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-details {
+  text-align: left;
+  margin-bottom: 20px;
+  color: var(--text-color); 
+}
+
+.account-details p {
+  margin-bottom: 10px;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  background-color: #c82333; /* Red for logout */
+}
+
+.logout-button:hover {
+  background-color: darken(#c82333, 10%); /* Slightly darker red */
+}
+
+/* AddFlower.js */
+.add-flower-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-flower-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.add-flower-form label {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-flower-form input,
+.add-flower-form textarea {
+  padding: 10px;
+  border: 1px solid var(--sage-green); 
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.add-flower-form textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  background-color: var(--sage-green);
+}
+
+.submit-button:hover {
+  background-color: darken(var(--sage-green), 10%); /* Slightly darker sage green */
+}
+
+/* EditFlower.js */
+.edit-flower-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--off-white); 
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-flower-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.edit-flower-form label {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-flower-form input,
+.edit-flower-form textarea {
+  padding: 10px;
+  border: 1px solid var(--sage-green); 
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.edit-flower-form textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  background-color: var(--sage-green); 
+}
+
+.submit-button:hover {
+  background-color: darken(var(--sage-green), 10%); /* Slightly darker sage green */
+}
