@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
 import './index.css';
-import homeImage from '../assets/homeImage.jpg';
+import homeImage from '../../assets/homeImage.jpg';
 
 const Home = () => {
     return (
