@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar'; 
-import './index.css';
+import '../index.css';
 
 const MyGarden = () => {
   const [plants, setPlants] = useState([]);

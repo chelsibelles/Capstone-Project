@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar'; 
-import './index.css'; 
+import '../index.css'; 
 
 const Account = () => {
   const [user, setUser] = useState(null);

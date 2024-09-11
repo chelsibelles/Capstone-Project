@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import NavBar from './NavBar'; 
-import './index.css'; 
+import '../index.css'; 
 
 const Flower = () => {
   const { id } = useParams(); // Get the flower ID from the URL parameters
