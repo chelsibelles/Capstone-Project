@@ -1,12 +1,10 @@
 import React from 'react';
-import NavBar from './NavBar';
 import '../index.css';
 import homeImage from '../assets/homeImage.jpg';
 
 const Home = () => {
     return (
         <div className="home-container">
-            <NavBar />
             <header className="home-header">
                 <img src={homeImage} alt="Home" className="home-image" />
                 <h1>Flower Haven</h1>

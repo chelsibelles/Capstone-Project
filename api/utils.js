@@ -1,3 +1,6 @@
+// utils.js
+
+// Middleware to ensure the user is authenticated
 function requireUser(req, res, next) {
     if (!req.user || !req.user.user_id) {
         return res.status(401).send("Unauthorized: You must be logged in to do that.");
@@ -5,6 +8,7 @@ function requireUser(req, res, next) {
     next();
 }
 
+// Middleware to validate flower data
 function checkFlowerData(req, res, next) {
     const { care_instructions, name } = req.body;
     if (!care_instructions || !name) {

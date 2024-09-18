@@ -2,13 +2,15 @@
   "name": "capstone-project",
   "version": "1.0.0",
   "description": "**Tier 1: MVP (Minimum Viable Product)** Create a GitHub repository. Start from scratch or use the template provided by your instructor.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "seed": "node prisma/seed.js",
-    "start": "node index.js",
-    "start:dev": "nodemon index.js",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run start:dev\" \"npm run client\""
+    "dev": "concurrently \"npm run start:dev\" \"npm run client\"",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",

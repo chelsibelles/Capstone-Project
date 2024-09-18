@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from './NavBar'; 
 import '../index.css';
 
 const MyGarden = () => {
@@ -38,10 +37,6 @@ const MyGarden = () => {
 
   return (
     <div>
-      <NavBar isAuthenticated={true} onLogout={() => {
-        localStorage.removeItem('token');
-        window.location.href = '/login'; // Redirect to login page on logout
-      }} />
       <div className="mygarden-container">
         <h1>My Garden</h1>
         {loading && <p>Loading plants...</p>}

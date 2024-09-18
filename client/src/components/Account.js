@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from './NavBar'; 
-import '../index.css'; 
+import '../index.css'; // Import global styles
 
 const Account = () => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +32,9 @@ const Account = () => {
           setUser(data);
         } catch (error) {
           console.error('Error fetching user data:', error);
+          setError('Failed to load user data. Please try again later.');
+        } finally {
+          setLoading(false); // Set loading to false after data is fetched
         }
       };
 
@@ -45,24 +49,25 @@ const Account = () => {
   };
 
   return (
-    <>
-      <NavBar /> 
-      <div className="account-container">
-        {user ? (
-          <>
-            <h1>My Profile</h1>
-            <div className="account-details">
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Username:</strong> {user.username}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-            </div>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </>
+    <div className="account-container">
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p> // Display error message if any
+      ) : user ? (
+        <>
+          <h1>My Profile</h1>
+          <div className="account-details">
+            <p><strong>Name:</strong> {user.name}</p>
+            <p><strong>Username:</strong> {user.username}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+          </div>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </>
+      ) : (
+        <p>User data not found.</p> // Handle case where user data is not available
+      )}
+    </div>
   );
 };
 

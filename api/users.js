@@ -4,13 +4,20 @@ const { requireUser } = require("./utils");
 
 usersRouter.get("/", requireUser, async (req, res, next) => {
   try {
-    delete req.user.password;
+    // Ensure `req.user` is defined and contains the necessary fields
+    if (!req.user) {
+      return res.status(401).json({ error: 'User not authenticated.' });
+    }
+
+    // Remove sensitive data before sending the response
+    const { password, ...userWithoutPassword } = req.user;
 
     res.send({
-      user: req.user,
+      user: userWithoutPassword,
     });
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    console.error(error);
+    next({ name: "InternalServerError", message: "An error occurred while fetching user data." });
   }
 });
 

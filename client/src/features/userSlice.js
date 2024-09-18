@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Initial state for the user
@@ -8,87 +8,86 @@ const initialState = {
   error: null,
 };
 
+// Thunks for handling async operations
+export const registerUser = createAsyncThunk('user/register', async (userData) => {
+  const response = await axios.post('/api/register', userData);
+  return response.data;
+});
+
+export const loginUserThunk = createAsyncThunk('user/login', async (credentials) => {
+  const response = await axios.post('/api/login', credentials);
+  return response.data;
+});
+
+export const fetchUserDetails = createAsyncThunk('user/fetchDetails', async () => {
+  const response = await axios.get('/api/account'); // Endpoint for fetching user details
+  return response.data;
+});
+
+export const updateUserDetailsThunk = createAsyncThunk('user/updateDetails', async (userData) => {
+  const response = await axios.put('/api/account', userData); // Endpoint for updating user details
+  return response.data;
+});
+
 // Create a slice of the Redux store
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action) {
-      state.user = action.payload;
-      state.status = 'succeeded';
-      state.error = null;
-    },
     logoutUser(state) {
       state.user = null;
       state.status = 'idle';
       state.error = null;
-    },
-    registrationSuccess(state, action) {
-      state.user = action.payload;
-      state.status = 'succeeded';
-      state.error = null;
-    },
-    registrationFailure(state, action) {
-      state.status = 'failed';
-      state.error = action.payload;
     },
     updateUserDetails(state, action) {
       if (state.user) {
         state.user = { ...state.user, ...action.payload };
       }
     },
-    fetchUserDetailsSuccess(state, action) {
-      state.user = action.payload;
-      state.status = 'succeeded';
-      state.error = null;
-    },
-    fetchUserDetailsFailure(state, action) {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = 'succeeded';
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(loginUserThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = 'succeeded';
+        state.error = null;
+      })
+      .addCase(loginUserThunk.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchUserDetails.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = 'succeeded';
+        state.error = null;
+      })
+      .addCase(fetchUserDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(updateUserDetailsThunk.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.status = 'succeeded';
+        state.error = null;
+      })
+      .addCase(updateUserDetailsThunk.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
   },
 });
 
-// Thunks for handling async operations
-export const registerUser = (userData) => async (dispatch) => {
-  try {
-    const response = await axios.post('/api/register', userData);
-    dispatch(registrationSuccess(response.data));
-  } catch (error) {
-    dispatch(registrationFailure(error.message));
-  }
-};
-
-export const loginUserThunk = (credentials) => async (dispatch) => {
-  try {
-    const response = await axios.post('/api/login', credentials);
-    dispatch(setUser(response.data));
-  } catch (error) {
-    dispatch(registrationFailure(error.message));
-  }
-};
-
-export const fetchUserDetails = () => async (dispatch) => {
-  try {
-    const response = await axios.get('/api/account'); // Endpoint for fetching user details
-    dispatch(fetchUserDetailsSuccess(response.data));
-  } catch (error) {
-    dispatch(fetchUserDetailsFailure(error.message));
-  }
-};
-
-export const updateUserDetailsThunk = (userData) => async (dispatch) => {
-  try {
-    const response = await axios.put('/api/account', userData); // Endpoint for updating user details
-    dispatch(updateUserDetails(response.data));
-  } catch (error) {
-    console.error('Failed to update user details:', error);
-    // Handle error if needed
-  }
-};
-
 // Export actions to use in components
-export const { setUser, logoutUser, registrationSuccess, registrationFailure, updateUserDetails, fetchUserDetailsSuccess, fetchUserDetailsFailure } = userSlice.actions;
+export const { logoutUser, updateUserDetails } = userSlice.actions;
 
 // Export the reducer to be used in the store
 export default userSlice.reducer;

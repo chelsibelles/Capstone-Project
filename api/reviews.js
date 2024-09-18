@@ -1,7 +1,9 @@
 const express = require('express');
 const { PrismaClient } = require("@prisma/client");
 const { requireUser } = require('./utils');
+
 const router = express.Router();
+const prisma = new PrismaClient(); // Initialize Prisma Client
 
 // Create a new review
 router.post('/', requireUser, async (req, res) => {
@@ -17,7 +19,7 @@ router.post('/', requireUser, async (req, res) => {
                 rating,
                 content,
                 flower: {
-                    connect: { flower_id: flowerId }
+                    connect: { id: flowerId } // Ensure the Prisma field matches your schema
                 },
                 user: {
                     connect: { id: req.user.id }
@@ -37,8 +39,8 @@ router.get('/flower/:flowerId', async (req, res) => {
 
     try {
         const reviews = await prisma.review.findMany({
-            where: { flower_id: flowerId },
-            include: { user: true } // Include user info in the response
+            where: { flowerId: parseInt(flowerId) }, // Ensure the Prisma field matches your schema
+            include: { user: true }
         });
         res.json(reviews);
     } catch (error) {
@@ -102,7 +104,7 @@ router.delete('/:reviewId', requireUser, async (req, res) => {
             where: { id: reviewId }
         });
 
-        res.status(204).end(); // No content to send back
+        res.status(204).end();
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to delete review.' });

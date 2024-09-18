@@ -1,7 +1,8 @@
 const express = require('express');
-const { PrismaClient } = require("@prisma/client"); 
-const { requireUser } = require('./utils'); 
+const { PrismaClient } = require('@prisma/client');
+const { requireUser } = require('./utils');
 const router = express.Router();
+const prisma = new PrismaClient(); // Ensure you instantiate PrismaClient here
 
 // Create a new comment
 router.post('/', requireUser, async (req, res) => {
@@ -25,7 +26,7 @@ router.post('/', requireUser, async (req, res) => {
         });
         res.status(201).json(newComment);
     } catch (error) {
-        console.error(error);
+        console.error('Error creating comment:', error);
         res.status(500).json({ error: 'Failed to create comment.' });
     }
 });
@@ -36,12 +37,12 @@ router.get('/flower/:flowerId', async (req, res) => {
 
     try {
         const comments = await prisma.comment.findMany({
-            where: { flower_id: flowerId },
-            include: { user: true } // Include user info in the response
+            where: { flowerId: flowerId }, // Match field name in Prisma schema
+            include: { user: true }
         });
         res.json(comments);
     } catch (error) {
-        console.error(error);
+        console.error('Error retrieving comments:', error);
         res.status(500).json({ error: 'Failed to retrieve comments.' });
     }
 });
@@ -75,7 +76,7 @@ router.put('/:commentId', requireUser, async (req, res) => {
 
         res.json(updatedComment);
     } catch (error) {
-        console.error(error);
+        console.error('Error updating comment:', error);
         res.status(500).json({ error: 'Failed to update comment.' });
     }
 });
@@ -103,7 +104,7 @@ router.delete('/:commentId', requireUser, async (req, res) => {
 
         res.status(204).end(); // No content to send back
     } catch (error) {
-        console.error(error);
+        console.error('Error deleting comment:', error);
         res.status(500).json({ error: 'Failed to delete comment.' });
     }
 });

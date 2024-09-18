@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import NavBar from './NavBar';
 import '../index.css'; 
 
 const EditFlower = () => {
@@ -10,6 +9,8 @@ const EditFlower = () => {
   const [description, setDescription] = useState('');
   const [careInstructions, setCareInstructions] = useState('');
   const [imageURL, setImageURL] = useState('');
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Add error state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +31,9 @@ const EditFlower = () => {
         setImageURL(data.img_url);
       } catch (error) {
         console.error('Error fetching flower data:', error);
+        setError('Failed to load flower data. Please try again later.');
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
 
@@ -54,59 +58,65 @@ const EditFlower = () => {
       });
 
       if (!response.ok) throw new Error('Failed to update flower');
-      navigate('/mygarden'); // Redirect to MyGarden after successful update
+      navigate('/my-garden'); // Redirect to MyGarden after successful update
     } catch (error) {
       console.error('Error updating flower:', error);
+      setError('Failed to update flower. Please try again later.');
     }
   };
 
   return (
-    <>
-      <NavBar /> 
-      <div className="edit-flower-container">
-        <h1>Edit Flower: {name}</h1>
-        {flower ? (
-          <form onSubmit={handleSubmit} className="edit-flower-form">
-            <label>
-              Flower Name:
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Description:
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Care Instructions:
-              <textarea
-                value={careInstructions}
-                onChange={(e) => setCareInstructions(e.target.value)}
-                required
-              />
-            </label>
-            <label>
-              Image URL:
-              <input
-                type="text"
-                value={imageURL}
-                onChange={(e) => setImageURL(e.target.value)}
-              />
-            </label>
-            <button type="submit" className="submit-button">Update Flower</button>
-          </form>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </>
+    <div className="edit-flower-container">
+      <h1>Edit Flower: {name}</h1>
+      {loading ? (
+        <p>Loading...</p> // Show loading message while fetching
+      ) : error ? (
+        <p className="error-message">{error}</p> // Show error message if there is an error
+      ) : flower ? (
+        <form onSubmit={handleSubmit} className="edit-flower-form">
+          <label htmlFor="name">
+            Flower Name:
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+          <label htmlFor="description">
+            Description:
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </label>
+          <label htmlFor="careInstructions">
+            Care Instructions:
+            <textarea
+              id="careInstructions"
+              value={careInstructions}
+              onChange={(e) => setCareInstructions(e.target.value)}
+              required
+            />
+          </label>
+          <label htmlFor="imageURL">
+            Image URL:
+            <input
+              id="imageURL"
+              type="text"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
+            />
+          </label>
+          <button type="submit" className="submit-button">Update Flower</button>
+        </form>
+      ) : (
+        <p>No flower data available.</p> // Show message if flower data is not available
+      )}
+    </div>
   );
 };
 

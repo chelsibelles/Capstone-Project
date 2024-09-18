@@ -21,7 +21,15 @@ const NavBar = ({ isAuthenticated, onLogout }) => {
         ) : (
           <>
             <div className="dropdown">
-              <button onClick={handleDropdownToggle} className="dropdown-button">Flowers</button>
+              <button 
+                onClick={handleDropdownToggle} 
+                className="dropdown-button" 
+                aria-expanded={isDropdownOpen} 
+                aria-haspopup="true"
+                aria-label="Flowers Menu"
+              >
+                Flowers
+              </button>
               {isDropdownOpen && (
                 <div className="dropdown-content">
                   <Link to="/flowers/add" className="nav-link">Add Flower</Link>
