@@ -13,35 +13,42 @@ const Login = () => {
     // Check if user is already logged in
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/account'); // Redirect to account page if logged in
+      navigate('/account'); // Redirect to account page if already logged in
     }
   }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null);  // Reset error before submitting
+    setError(null);  // Reset error state before submitting
     setLoading(true);  // Set loading state
 
     try {
-      const response = await fetch('http://localhost:5000/auth/login', { 
+      const response = await fetch('http://localhost:5003/auth/login', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include',  // Ensures cookies and credentials are sent
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || 'Invalid login credentials');
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          setError(errorData.message || 'Invalid login credentials.');
+        } else {
+          setError('Unexpected response format. Please try again.');
+        }
         return;
       }
 
       const { token } = await response.json();
       localStorage.setItem('token', token); 
-      navigate('/account'); // Redirect to account page
+      navigate('/account'); // Redirect to account page upon success
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      console.error('Network or server error during login:', error);
+      setError('A network error occurred. Please try again later.');
     } finally {
       setLoading(false); // Reset loading state
     }

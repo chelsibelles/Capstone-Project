@@ -9,21 +9,22 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);  // Add loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null);  // Reset error before submitting
-    setLoading(true);  // Set loading state
+    setError(null);
+    setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5001/auth/register', {  // Ensure this endpoint matches your backend setup
+      const response = await fetch('http://localhost:5001/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ firstName, lastName, email, username, password }),
+        credentials: 'include',  // Ensures cookies and other credentials are sent
       });
 
       if (!response.ok) {
@@ -39,12 +40,12 @@ const Register = () => {
 
       const { token } = await response.json();
       localStorage.setItem('token', token);
-      navigate('/account');  // Redirect to the account page or login page
+      navigate('/account');
     } catch (error) {
       console.error('Network or server error during registration:', error);
       setError('A network error occurred. Please try again later.');
     } finally {
-      setLoading(false);  // Reset loading state
+      setLoading(false);
     }
   };
 

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { PrismaClient } = require("@prisma/client");
 const { faker } = require("@faker-js/faker");
 const flowerNames = require("./flowerNames");
@@ -14,8 +15,8 @@ async function main() {
           username: faker.internet.userName(),
           password: faker.internet.password(),
           email: faker.internet.email(),
-          firstName: faker.person.firstName(),
-          lastName: faker.person.lastName(),
+          first_name: faker.person.firstName(), 
+          last_name: faker.person.lastName(),   
         },
       })
     )
@@ -27,14 +28,12 @@ async function main() {
     users.map((user) =>
       Promise.all(
         [...Array(3)].map(async () => {
-          const randomNum = Math.round(Math.random());
-          
           await prisma.flower.create({
             data: {
               name: flowerNames[Math.floor(Math.random() * flowerNames.length)],
               description: faker.lorem.sentence(),
               care_instructions: faker.lorem.sentence(),
-              img_url: faker.image.imageUrl(), 
+              img_url: faker.image.url(), 
               user_id: user.user_id, 
             },
           });
